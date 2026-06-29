@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "dev": "vercel dev",
+    "deploy": "vercel deploy"
   },
   "dependencies": {
-    "hono": "^4.0.0"
+    "hono": "^4.0.0",
+    "@hono/vercel": "^1.0.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240620.0",
-    "wrangler": "^3.0.0"
+    "vercel": "^34.0.0"
   }
 }

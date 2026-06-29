@@ -5,7 +5,7 @@ A web app to discover and save project ideas for your next build. Browse by cate
 ## Stack
 
 - **Web**: Next.js 15 + React + TypeScript + Tailwind CSS v4 + shadcn/ui
-- **API**: Hono (Cloudflare Workers)
+- **API**: Hono (Vercel serverless functions)
 - **DB**: Drizzle ORM + SQLite (Neon Postgres in production)
 
 ## Setup
@@ -21,16 +21,24 @@ npm run dev --filter=web
 npm run dev --filter=api
 ```
 
+## Deploy
+
+Both the API and web app deploy to Vercel:
+
+```bash
+# Deploy API
+cd apps/api && vercel --prod
+
+# Deploy Web
+cd apps/web && vercel --prod
+```
+
 ## Structure
 
 ```
 apps/
   web/       Next.js frontend
-  api/       Hono backend
+  api/       Hono backend (Vercel serverless)
 packages/
   db/        Drizzle schema
 ```
-
-## Deploy
-
-The API deploys to Cloudflare Workers. The web app can be deployed to Vercel.

@@ -1,11 +1,12 @@
 import { Hono } from 'hono'
+import { handle } from 'hono/vercel'
 
 const app = new Hono()
 
 app.get('/api/health', (c) => c.json({ status: 'ok' }))
 
-app.get('/api/generate', async (c) => {
-  const { idea, category } = await c.req.query()
+app.get('/api/generate', (c) => {
+  const { idea, category } = c.req.query()
   if (!idea) {
     return c.json({ ideas: generateIdeas() })
   }
@@ -23,10 +24,10 @@ function generateIdeas(topic?: string, category?: string) {
     { title: 'Job Application Tracker', description: 'Track job applications, interviews, and follow-ups', category: 'Productivity', difficulty: 'Easy' },
     { title: 'Open Source Directory', description: 'Discover and explore open source projects by language or topic', category: 'Developer Tools', difficulty: 'Medium' },
   ]
-  
+
   let filtered = ideas
   if (topic) {
-    filtered = filtered.filter(i => 
+    filtered = filtered.filter(i =>
       i.title.toLowerCase().includes(topic.toLowerCase()) ||
       i.description.toLowerCase().includes(topic.toLowerCase())
     )
@@ -34,8 +35,10 @@ function generateIdeas(topic?: string, category?: string) {
   if (category) {
     filtered = filtered.filter(i => i.category === category)
   }
-  
+
   return filtered.length > 0 ? filtered : ideas
 }
 
-export default app
+export const runtime = 'nodejs'
+
+export default handle(app)
